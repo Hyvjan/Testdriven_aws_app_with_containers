@@ -1,0 +1,1 @@
+[![Build Status](https://travis-ci.org/Hyvjan/testdriven_aws_app_with_containers.svg?branch=master)](https://travis-ci.org/Hyvjan/testdriven_aws_app_with_containers)
