@@ -23,7 +23,8 @@ class User(db.Model):
     def __init__(self, username, email, password):
         self.username = username
         self.email = email
-        self.password = bcrypt.generate_password_hash(password, current_app.config.get('BCRYPT_LOG_RONDS')).decode()
+        self.password = bcrypt.generate_password_hash(
+            password, current_app.config.get('BCRYPT_LOG_RONDS')).decode()
 
     def to_json(self):
         return {
@@ -37,8 +38,10 @@ class User(db.Model):
         try:
             payload = {
                 "exp": datetime.datetime.utcnow() + datetime.timedelta(
-                    days=current_app.config.get("TOKEN_EXPIRATION_DAYS"), 
-                    seconds=current_app.config.get("TOKEN_EXPIRATION_SECONDS")),
+                    days=current_app.config.get(
+                        "TOKEN_EXPIRATION_DAYS"),
+                    seconds=current_app.config.get(
+                        "TOKEN_EXPIRATION_SECONDS")),
                 "iat": datetime.datetime.utcnow(),
                 "sub": user_id
             }
@@ -53,7 +56,8 @@ class User(db.Model):
     @staticmethod
     def decode_auth_token(auth_token):
         try:
-            payload = jwt.decode(auth_token, current_app.config.get('SECRET_KEY'))
+            payload = jwt.decode(auth_token,
+                                 current_app.config.get('SECRET_KEY'))
             return payload['sub']
         except jwt.ExpiredSignatureError:
             return 'Signature expired. Please login again.'
